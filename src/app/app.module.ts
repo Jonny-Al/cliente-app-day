@@ -47,7 +47,8 @@ import { AreaServiceService } from './Services/Area/area-service.service';
     MatSelectModule,
     HttpClientModule,
     NgbToastModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+
   ],
   providers: [UsuarioServiceService, RolServiceService, AreaServiceService],
   bootstrap: [AppComponent]

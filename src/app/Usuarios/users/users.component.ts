@@ -9,13 +9,11 @@ import { RolServiceService } from 'src/app/Services/Rol/rol-service.service';
 import { Area } from 'src/app/Model/Area';
 import { AreaServiceService } from 'src/app/Services/Area/area-service.service';
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-
 
 export class UsersComponent implements OnInit {
 
@@ -30,6 +28,7 @@ export class UsersComponent implements OnInit {
     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
         this.usuarios = response;
+
       }, error(response: any) {
         console.log('Error al obtener lista de usuarios: ', response);
       }
@@ -56,12 +55,11 @@ export class UsersComponent implements OnInit {
   // ==== METODO PARA REGISTRAR UN USUARIO
 
   userAdd: Usuario = new Usuario();
-  mimensaje!: String;
-
   addUser(usuario: Usuario) {
     usuario.estado = '1';
 
     validate(usuario).then(errors => {
+
       if (errors.length > 0) {
         console.log('Error de campos: ', errors); // Imprime errores que encuentra en atributos
       } else {
@@ -75,7 +73,7 @@ export class UsersComponent implements OnInit {
               }
             }
           }, error: (response: any) => {
-            console.log('Error de petición: ' , response);
+            console.log('Error de petición: ', response);
           }
         });
       }
@@ -194,3 +192,11 @@ export class UsersComponent implements OnInit {
   }
 
 }
+
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
