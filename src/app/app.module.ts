@@ -11,13 +11,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { UsersComponent } from './Usuarios/users/users.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSelectModule } from '@angular/material/select';
 import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
 import { HttpClientModule } from '@angular/common/http'; // Se agrega los servicios que se van a usar
 import { NgbToastModule } from 'ngb-toast';
 import { UsereditComponent } from './Usuarios/useredit/useredit.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RolServiceService } from './Services/Rol/rol-service.service';
+import { AreaServiceService } from './Services/Area/area-service.service';
+
 
 @NgModule({
   declarations: [
@@ -37,12 +41,14 @@ import { UsereditComponent } from './Usuarios/useredit/useredit.component';
     MatTableModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     MatSelectModule,
     HttpClientModule,
-    NgbToastModule
+    NgbToastModule,
+    MatAutocompleteModule
   ],
-  providers: [UsuarioServiceService],
+  providers: [UsuarioServiceService, RolServiceService, AreaServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,11 +9,14 @@ import { RolServiceService } from 'src/app/Services/Rol/rol-service.service';
 import { Area } from 'src/app/Model/Area';
 import { AreaServiceService } from 'src/app/Services/Area/area-service.service';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+
+
 export class UsersComponent implements OnInit {
 
   usuarios: Usuario[] = [];
@@ -23,6 +26,7 @@ export class UsersComponent implements OnInit {
   constructor(private modalService: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
   ngOnInit() {
+
     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
         this.usuarios = response;
@@ -58,7 +62,8 @@ export class UsersComponent implements OnInit {
 
     validate(usuario).then(errors => {
       if (errors.length > 0) {
-        console.log('Error de campos: ', errors);
+        console.log('Error de campos: ', errors); // Imprime errores que encuentra en atributos
+        usuario.correo = 'error mi papa';
       } else {
         // Add usuario
         this.serviceUsuario.addUser(usuario).subscribe({
@@ -100,10 +105,10 @@ export class UsersComponent implements OnInit {
       next: (response: any) => {
         if (response.message) {
           if (response.message == 'Actualizado') {
-            this.toastShow(`Se actualizo a ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Success);
+            this.toastShow(`Se actualizo a:  ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Success);
             this.ngOnInit();
           } else {
-            this.toastShow(`No se actualizo a ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Warning);
+            this.toastShow(`No se actualizo a: ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Warning);
           }
         }
       }, error(response: any) {
@@ -130,7 +135,7 @@ export class UsersComponent implements OnInit {
           this.toastShow(`Se elimino a: ${this.uselimina}`, NgbToastType.Success);
           this.ngOnInit();
         } else {
-          this.toastShow(`No se elimino a: ${this.uselimina}`, NgbToastType.Warning);
+          this.toastShow(`No se logro eliminar a: ${this.uselimina}`, NgbToastType.Warning);
         }
       }
     });

@@ -47,11 +47,12 @@
         </tbody>
     </table>
 
-    <!-- MODALES -->
 
+    <!-- MODALES -->
 
     <!-- modal para agregar un usuario-->
     <ng-template #modalAddUser let-modal>
+        <input type="hidden" #hdAdd value="1">
         <div class="modal-header">
             <h3 class="modal-title">Registrar usuario</h3>
             <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -61,49 +62,56 @@
         <div class="modal-body">
             <div class="form-group row">
                 <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
-                    <mat-label>Nombres</mat-label>
-                    <input matInput [(ngModel)]="userAdd.nombres" value="nombres">
+                    <mat-label> Nombres</mat-label>
+                    <input matInput [(ngModel)]="userAdd.nombres" name="nombres" minlength="3" pattern="[a-zA-Z ]*" required>
+                    <mat-hint align="end" class="text-danger">mensaje nombres</mat-hint>
                 </mat-form-field>
                 <mat-form-field class="example-full-width col-sm-6">
                     <mat-label>Apellidos</mat-label>
-                    <input matInput [(ngModel)]="userAdd.apellidos" value="apellidos">
+                    <input matInput [(ngModel)]="userAdd.apellidos" name="apellidos" minlength="3" pattern="[a-zA-Z ]*" required>
+                    <mat-hint align="end" class="text-danger">mensaje apellidos</mat-hint>
                 </mat-form-field>
             </div>
             <div class="form-group row">
                 <mat-form-field class="example-full-width col-sm-12">
-                    <mat-label>Correo electrónico</mat-label>
-                    <input type="email" matInput [(ngModel)]="userAdd.correo" value="correo">
+                    <mat-label>Correo electrónico </mat-label>
+                    <input type="email" matInput [(ngModel)]="userAdd.correo" name="correo" placeholder="example@dominio.com" pattern="/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" required>
+                    <mat-hint align="end" class="text-danger">mensaje email</mat-hint>
+                    <mat-icon matSuffix class="text-secondary">email</mat-icon>
                 </mat-form-field>
             </div>
             <div class="form-group row">
                 <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
-                    <mat-label>Clave</mat-label>
-                    <input type="password" matInput #clave minlength="5" [(ngModel)]="userAdd.clave" value="clave">
-                    <mat-hint align="end">{{clave.value.length}} / 6</mat-hint>
+                    <mat-label>Clave </mat-label>
+                    <input type="password" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" required>
+                    <mat-hint align="end">{{clave.value.length}} / 8</mat-hint>
                 </mat-form-field>
                 <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                     <mat-label>Teléfono</mat-label>
-                    <input type="text" matInput #telefono maxlength="12" [(ngModel)]="userAdd.telefono" value="telefono">
+                    <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userAdd.telefono" name="telefono" placeholder="555-55-00" pattern="[0-9]*">
+                    <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                     <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                 </mat-form-field>
             </div>
             <div class="form-group">
                 <mat-form-field class="col-sm-12 mb-3 mb-sm-0">
                     <mat-label>Rol</mat-label>
-                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol">
-                            <option class="form-control" *ngFor="let rol of roles" value="{{rol.Idrol}}">
-                                {{rol.cargo}}
-                            </option>
+                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required>
+                        <option class="form-control" *ngFor="let rol of roles" value="{{rol.Idrol}}">
+                            {{rol.cargo}}
+                        </option>
                     </select>
+                    <mat-hint align="end" class="text-danger">mensaje rol</mat-hint>
                 </mat-form-field>
 
                 <mat-form-field class="col-sm-12">
                     <mat-label>Area</mat-label>
-                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea">
+                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea" required>
                         <option class="form-control" *ngFor="let area of areas" value="{{area.IdArea}}">
                             {{area.area}}
                         </option>
                     </select>
+                    <mat-hint align="end" class="text-danger">mensaje area</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -111,7 +119,7 @@
             <button class="card card-small btn bg-light" (click)="closeModal()">
                 <span class="p-2">Cancelar</span>
             </button>
-            <button class="card card-small btn btn-primary bg-primary" (click)="addUser(userAdd)">
+            <button *ngIf="userAdd.nombres != '' && userAdd.apellidos != '' && userAdd.correo != '' && userAdd.clave != '' && userAdd.clave.length > 6" class="card card-small btn btn-primary bg-primary" (click)="addUser(userAdd)">
                 <span class="p-2">Registrar</span>
             </button>
         </div>
@@ -129,26 +137,28 @@
             <div class="form-group row">
                 <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                     <mat-label>Nombres</mat-label>
-                    <input matInput [(ngModel)]="userUpdate.nombres" value="nombres">
+                    <input matInput [(ngModel)]="userUpdate.nombres" name="nombres" minlength="3" required>
                 </mat-form-field>
                 <mat-form-field class="example-full-width col-sm-6">
                     <mat-label>Apellidos</mat-label>
-                    <input matInput [(ngModel)]="userUpdate.apellidos" value="apellidos">
+                    <input matInput [(ngModel)]="userUpdate.apellidos" name="apellidos" minlength="3" required>
                 </mat-form-field>
             </div>
             <div class="form-group row">
                 <mat-form-field class="example-full-width col-sm-6">
                     <mat-label>Correo alternativo</mat-label>
-                    <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" value="correo">
+                    <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" required>
+                    <mat-icon matSuffix class="text-secondary">email</mat-icon>
                 </mat-form-field>
                 <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                     <mat-label>Teléfono</mat-label>
-                    <input type="text" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" value="telefono">
+                    <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="555-55-00">
+                    <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                     <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                 </mat-form-field>
             </div>
-
         </div>
+
         <div class="modal-footer">
             <button class="card card-small btn bg-light" (click)="closeModal()">
                 <span class="p-2">Cancelar</span>
@@ -157,6 +167,7 @@
                 <span class="p-2">Actualizar</span>
             </button>
         </div>
+
     </ng-template>
 
     <!-- modal para eliminar un usuario-->
