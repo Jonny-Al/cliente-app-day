@@ -56,6 +56,7 @@ export class UsersComponent implements OnInit {
   // ==== METODO PARA REGISTRAR UN USUARIO
 
   userAdd: Usuario = new Usuario();
+  mimensaje!: String;
 
   addUser(usuario: Usuario) {
     usuario.estado = '1';
@@ -63,7 +64,6 @@ export class UsersComponent implements OnInit {
     validate(usuario).then(errors => {
       if (errors.length > 0) {
         console.log('Error de campos: ', errors); // Imprime errores que encuentra en atributos
-        usuario.correo = 'error mi papa';
       } else {
         // Add usuario
         this.serviceUsuario.addUser(usuario).subscribe({
@@ -74,8 +74,8 @@ export class UsersComponent implements OnInit {
                 this.ngOnInit();
               }
             }
-          }, error(response: any) {
-            console.log('Error: ' + response);
+          }, error: (response: any) => {
+            console.log('Error de petición: ' , response);
           }
         });
       }
@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
       next: (response: any) => {
         this.userUpdate = response;
         this.openModal(modal, 'modal');
-      }, error(response: any) {
+      }, error: (response: any) => {
         console.log('Error al obtener el usuario: ', response);
       }
     });
@@ -111,7 +111,7 @@ export class UsersComponent implements OnInit {
             this.toastShow(`No se actualizo a: ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Warning);
           }
         }
-      }, error(response: any) {
+      }, error: (response: any) => {
         console.log('Error al actualizar el usuario: ', response);
       }
     });

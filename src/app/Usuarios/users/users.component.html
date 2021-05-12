@@ -1,12 +1,9 @@
 <div class="container-fluid">
-    <div class="float-left" (click)="openModal(modalAddUser,'modal')">
-        <div class="card-container">
-            <div class="card card-small">
-                <mat-icon color="primary">add</mat-icon>
-                <span class="p-2">Registrar</span>
-            </div>
-        </div>
-    </div>
+
+    <button type="button" class="card card-small btn float-left movement" (click)="openModal(modalAddUser,'modal')">
+        <mat-icon color="primary">add</mat-icon>
+        <span class="p-2">Registrar</span>
+    </button>
 
     <table class="table">
         <thead class="bg-dark text-white">
@@ -46,7 +43,6 @@
             </tr>
         </tbody>
     </table>
-
 
     <!-- MODALES -->
 
@@ -96,7 +92,7 @@
             <div class="form-group">
                 <mat-form-field class="col-sm-12 mb-3 mb-sm-0">
                     <mat-label>Rol</mat-label>
-                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required>
+                    <select matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required>
                         <option class="form-control" *ngFor="let rol of roles" value="{{rol.Idrol}}">
                             {{rol.cargo}}
                         </option>
@@ -106,7 +102,7 @@
 
                 <mat-form-field class="col-sm-12">
                     <mat-label>Area</mat-label>
-                    <select class="form-select" matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea" required>
+                    <select matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea" required>
                         <option class="form-control" *ngFor="let area of areas" value="{{area.IdArea}}">
                             {{area.area}}
                         </option>

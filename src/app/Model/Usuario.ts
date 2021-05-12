@@ -1,7 +1,6 @@
 import { Area } from './Area';
 import { Rol } from './Rol';
 import { IsEmail, Length, MaxLength, MinLength } from 'class-validator';
-import { PatternValidator } from '@angular/forms';
 
 export class Usuario {
     id!: number;

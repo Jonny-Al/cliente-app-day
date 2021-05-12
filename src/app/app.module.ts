@@ -23,6 +23,7 @@ import { RolServiceService } from './Services/Rol/rol-service.service';
 import { AreaServiceService } from './Services/Area/area-service.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
