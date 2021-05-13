@@ -56,12 +56,11 @@ export class UsersComponent implements OnInit {
 
   userAdd: Usuario = new Usuario();
   addUser(usuario: Usuario) {
-    usuario.estado = '1';
+    usuario.estado = 1;
 
     validate(usuario).then(errors => {
-
       if (errors.length > 0) {
-        console.log('Error de campos: ', errors); // Imprime errores que encuentra en atributos
+        console.log('Error de campos al agregar usuario: ', errors); // Imprime errores que encuentra en atributos
       } else {
         // Add usuario
         this.serviceUsuario.addUser(usuario).subscribe({
@@ -80,7 +79,6 @@ export class UsersComponent implements OnInit {
     });
   }
 
-
   // ===== METODO PARA OBTENER USUARIO POR ID PARA ACTUALIZAR
 
   userUpdate: Usuario = new Usuario();
@@ -97,20 +95,27 @@ export class UsersComponent implements OnInit {
     });
   }
 
-
   updateUser(usuario: Usuario) {
-    this.serviceUsuario.updateUserInfoPersonal(usuario).subscribe({
-      next: (response: any) => {
-        if (response.message) {
-          if (response.message == 'Actualizado') {
-            this.toastShow(`Se actualizo a:  ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Success);
-            this.ngOnInit();
-          } else {
-            this.toastShow(`No se actualizo a: ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Warning);
+
+    validate(usuario).then(errors => {
+      if (errors.length > 0) {
+        console.log('Error de campos al actualizar usuario: ', errors); // Imprime errores que encuentra en atributos
+      } else {
+        // Update usuario
+        this.serviceUsuario.updateUserInfoPersonal(usuario).subscribe({
+          next: (response: any) => {
+            if (response.message) {
+              if (response.message == 'Actualizado') {
+                this.toastShow(`Se actualizo a:  ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Success);
+                this.ngOnInit();
+              } else {
+                this.toastShow(`No se actualizo a: ${this.userUpdate.nombres}  ${this.userUpdate.apellidos}`, NgbToastType.Warning);
+              }
+            }
+          }, error: (response: any) => {
+            console.log('Error al actualizar el usuario: ', response);
           }
-        }
-      }, error: (response: any) => {
-        console.log('Error al actualizar el usuario: ', response);
+        });
       }
     });
   }

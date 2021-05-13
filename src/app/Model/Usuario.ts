@@ -1,19 +1,25 @@
 import { Area } from './Area';
 import { Rol } from './Rol';
-import { IsEmail, Length, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class Usuario {
     id!: number;
 
-    @Length(3, 30, { message: 'nombres inválidos' })
+    @Length(3)
+    @IsNotEmpty()
+    @Matches(/^[a-zA-Z_-]$/)
     nombres: String = "";
 
-    @Length(3, 30, { message: 'apellidos inválidos' })
+    @Length(3)
+    @IsNotEmpty()
+    @Matches(/^[a-zA-Z_-]$/)
     apellidos: String = "";
 
-    @MaxLength(15, { message: 'El teléfono es inválido' })
+    @MaxLength(15)
+    @Matches(/[0-9]*/)
     telefono: String = "";
 
+    @MinLength(8)
     clave: String = "";
 
     @IsEmail()
@@ -23,7 +29,7 @@ export class Usuario {
 
     foto: String = "";
 
-    estado: String = "";
+    estado!: number;
 
     @MinLength(1)
     Idrol: number | undefined;

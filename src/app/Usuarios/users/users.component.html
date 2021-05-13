@@ -48,7 +48,7 @@
 
     <!-- modal para agregar un usuario-->
     <ng-template #modalAddUser let-modal>
-        <form #formAdd name="formAdd" validate>
+        <form validate>
             <div class="modal-header">
                 <h3 class="modal-title">Registrar usuario</h3>
                 <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -59,13 +59,13 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                         <mat-label> Nombres</mat-label>
-                        <input matInput [(ngModel)]="userAdd.nombres" name="nombres" minlength="3" pattern="[a-zA-Z ]*" required #addnombres="ngModel">
+                        <input matInput [(ngModel)]="userAdd.nombres" name="nombres" minlength="3" pattern="[a-zA-Z ]*" #addnombres="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addnombres.hasError('pattern')">Nombre inválido
                         </mat-hint>
                     </mat-form-field>
                     <mat-form-field class="example-full-width col-sm-6">
                         <mat-label>Apellidos</mat-label>
-                        <input matInput [(ngModel)]="userAdd.apellidos" name="apellidos" minlength="3" pattern="[a-zA-Z ]*" required #addapellidos="ngModel">
+                        <input matInput [(ngModel)]="userAdd.apellidos" name="apellidos" minlength="3" pattern="[a-zA-Z ]*" #addapellidos="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addapellidos.hasError('pattern')">Apellidos inválidos
                         </mat-hint>
                     </mat-form-field>
@@ -73,7 +73,7 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-12">
                         <mat-label>Correo electrónico </mat-label>
-                        <input type="email" matInput [(ngModel)]="userAdd.correo" name="correo" placeholder="example@dominio.com" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required #addemail="ngModel">
+                        <input type="email" matInput [(ngModel)]="userAdd.correo" name="correo" placeholder="example@dominio.com" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" #addemail="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addemail.hasError('pattern')">Correo inválido
                         </mat-hint>
                         <mat-icon matSuffix class="text-secondary">email</mat-icon>
@@ -82,7 +82,7 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Clave </mat-label>
-                        <input type="password" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" required #addclave="ngModel">
+                        <input type="password" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" #addclave="ngModel" required>
                         <mat-hint align="end">{{clave.value.length}} / 8</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
@@ -95,27 +95,24 @@
                 <div class="form-group">
                     <mat-form-field class="col-sm-12 mb-3 mb-sm-0">
                         <mat-label>Rol</mat-label>
-                        <select matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required #addrol="ngModel">
+                        <select matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required>
                             <option class="form-control" *ngFor="let rol of roles" value="{{rol.Idrol}}">
                                 {{rol.cargo}}
                             </option>
                         </select>
-                        <mat-hint align="end" class="text-danger" *ngIf="addrol.hasError('required')">Seleccione el rol
-                        </mat-hint>
                     </mat-form-field>
 
                     <mat-form-field class="col-sm-12">
                         <mat-label>Area</mat-label>
-                        <select matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea" required #addarea="ngModel">
+                        <select matNativeControl [(ngModel)]="userAdd.IdArea" name="IdArea" required>
                             <option class="form-control" *ngFor="let area of areas" value="{{area.IdArea}}">
                                 {{area.area}}
                             </option>
                         </select>
-                        <mat-hint align="end" class="text-danger" *ngIf="addarea.hasError('required')">Seleccione el area
-                        </mat-hint>
                     </mat-form-field>
                 </div>
             </div>
+
             <div class="modal-footer">
                 <button class="card card-small btn bg-light" (click)="closeModal()">
                     <span class="p-2">Cancelar</span>
@@ -130,47 +127,53 @@
 
     <!-- modal para actualizar un usuario-->
     <ng-template #modalUpdateUser let-modal>
-        <div class="modal-header">
-            <h3 class="modal-title">Actualizar usuario</h3>
-            <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group row">
-                <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
-                    <mat-label>Nombres</mat-label>
-                    <input matInput [(ngModel)]="userUpdate.nombres" name="nombres" minlength="3" required>
-                </mat-form-field>
-                <mat-form-field class="example-full-width col-sm-6">
-                    <mat-label>Apellidos</mat-label>
-                    <input matInput [(ngModel)]="userUpdate.apellidos" name="apellidos" minlength="3" required>
-                </mat-form-field>
+        <form validate>
+            <div class="modal-header">
+                <h3 class="modal-title">Actualizar usuario</h3>
+                <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group row">
-                <mat-form-field class="example-full-width col-sm-6">
-                    <mat-label>Correo alternativo</mat-label>
-                    <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" required>
-                    <mat-icon matSuffix class="text-secondary">email</mat-icon>
-                </mat-form-field>
-                <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
-                    <mat-label>Teléfono</mat-label>
-                    <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="555-55-00">
-                    <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
-                    <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
-                </mat-form-field>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                        <mat-label>Nombres</mat-label>
+                        <input matInput [(ngModel)]="userUpdate.nombres" name="nombres" minlength="3" #updnombres="ngModel" pattern="[a-zA-Z ]*" required>
+                        <mat-hint align="end" class="text-danger" *ngIf="updnombres.hasError('pattern')">Nombre inválido
+                        </mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width col-sm-6">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput [(ngModel)]="userUpdate.apellidos" name="apellidos" minlength="3" #updapellidos="ngModel" pattern="[a-zA-Z ]*" required>
+                        <mat-hint align="end" class="text-danger" *ngIf="updapellidos.hasError('pattern')">Apellidos inválidos
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="form-group row">
+                    <mat-form-field class="example-full-width col-sm-6">
+                        <mat-label>Correo alternativo</mat-label>
+                        <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
+                        <mat-hint align="end" class="text-danger" *ngIf="updcorreo.hasError('pattern')">Correo inválido
+                        </mat-hint>
+                        <mat-icon matSuffix class="text-secondary">email</mat-icon>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                        <mat-label>Teléfono</mat-label>
+                        <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="555-55-00" pattern="[0-9]*">
+                        <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
+                        <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
+                    </mat-form-field>
+                </div>
             </div>
-        </div>
-
-        <div class="modal-footer">
-            <button class="card card-small btn bg-light" (click)="closeModal()">
-                <span class="p-2">Cancelar</span>
-            </button>
-            <button class="card card-small btn btn-primary bg-primary" (click)="updateUser(userUpdate)">
-                <span class="p-2">Actualizar</span>
-            </button>
-        </div>
-
+            <div class="modal-footer">
+                <button class="card card-small btn bg-light" (click)="closeModal()">
+                    <span class="p-2">Cancelar</span>
+                </button>
+                <button class="card card-small btn btn-primary bg-primary" (click)="updateUser(userUpdate)">
+                    <span class="p-2">Actualizar</span>
+                </button>
+            </div>
+        </form>
     </ng-template>
 
     <!-- modal para eliminar un usuario-->
