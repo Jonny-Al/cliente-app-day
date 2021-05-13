@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { validate } from 'class-validator';
 import { Usuario } from 'src/app/Model/Usuario';
@@ -9,6 +9,8 @@ import { RolServiceService } from 'src/app/Services/Rol/rol-service.service';
 import { Area } from 'src/app/Model/Area';
 import { AreaServiceService } from 'src/app/Services/Area/area-service.service';
 import { NgForm } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-users',
@@ -17,8 +19,18 @@ import { NgForm } from '@angular/forms';
 })
 
 export class UsersComponent implements OnInit {
+  // == Lista de usuarios con paginación
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  usuarios: Usuario[] = []; // --> para lista en tabla de usuarios
+  listUsuarios: Usuario[] = [];// para lista en tabla de usuarios
+
+  displayedColumns: string[] = ['Nombres', 'Apellidos', 'Correo', 'Telefono', 'Cargo', 'Area', 'Acciones'];
+  dataSource = new MatTableDataSource<Usuario>(this.listUsuarios);
+
+  ngAfterViewInit() { // Add paginación a datasource
+    this.dataSource.paginator = this.paginator;
+  }
+  // ===========
   roles: Rol[] = []; // --> para lista en select option #modalAddUser
   areas: Area[] = []; // --> para lista en select option #modalAddUser
 
@@ -29,8 +41,7 @@ export class UsersComponent implements OnInit {
     // == Obtiene la lista de usuarios
     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
-        this.usuarios = response;
-
+        this.dataSource.data = response as Usuario[];
       }, error(response: any) {
         console.log('Error al obtener lista de usuarios: ', response);
       }
@@ -203,7 +214,7 @@ export class UsersComponent implements OnInit {
       toastType: type,
       text: message,
       dismissible: true,
-      timeInSeconds: 5,
+      timeInSeconds: 8,
     }
     this.toastService.show(toast);
   }

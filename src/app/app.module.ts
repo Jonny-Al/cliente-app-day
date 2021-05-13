@@ -9,6 +9,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatInputModule } from '@angular/material/input';
 import { UsersComponent } from './Usuarios/users/users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,8 +22,7 @@ import { UsereditComponent } from './Usuarios/useredit/useredit.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RolServiceService } from './Services/Rol/rol-service.service';
 import { AreaServiceService } from './Services/Area/area-service.service';
-
-
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import { AreaServiceService } from './Services/Area/area-service.service';
     MatIconModule,
     MatExpansionModule,
     MatTableModule,
+    MatPaginatorModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
@@ -48,6 +49,7 @@ import { AreaServiceService } from './Services/Area/area-service.service';
     HttpClientModule,
     NgbToastModule,
     MatAutocompleteModule,
+    MatMenuModule
 
   ],
   providers: [UsuarioServiceService, RolServiceService, AreaServiceService],

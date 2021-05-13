@@ -80,6 +80,14 @@ svg.material-icons:not(:last-child) {
     margin-right: 8px;
 }
 
+table {
+    width: 100%;
+}
+
+.toolbar-dark {
+    background-color: #11161d;
+}
+
 .card svg.material-icons path {
     fill: #888;
 }
