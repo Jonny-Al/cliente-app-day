@@ -1,13 +1,22 @@
 <div class="container-fluid">
 
-    <div class="m-2 float-right">
-        <button type="button" class="card card-small btn float-left movement" (click)="openModal(modalAddUser,'modal')">
-            <mat-icon color="primary">add</mat-icon>
+    <div class="m-2 float-right ">
+        <button type="button" class="card card-small bg-primary text-white movement" (click)="openModal(modalAddUser,'modal')">
+            <mat-icon>add</mat-icon>
             <span class="p-2">Registrar</span>
         </button>
     </div>
 
     <div class="mat-elevation-z4" style="border-radius: 10px;">
+        <!--  filter table -->
+        <div class="d-flex justify-content-center">
+            <mat-form-field class="p-2 col-lg-4">
+                <mat-label>Consultar</mat-label>
+                <input matInput (keyup)="tableFilter($event)" placeholder="Escribe aqui" #input>
+            </mat-form-field>
+        </div>
+        <!--  end filter table -->
+
         <table mat-table [dataSource]="dataSource">
             <!-- Position Column -->
             <ng-container matColumnDef="Nombres">
@@ -68,7 +77,6 @@
         <mat-paginator [pageSizeOptions]="[10, 20,30]" showFirstLastButtons></mat-paginator>
     </div>
 
-
     <!-- MODALES -->
 
     <!-- modal para agregar un usuario-->
@@ -91,7 +99,7 @@
                     <mat-form-field class="example-full-width col-sm-6">
                         <mat-label>Apellidos</mat-label>
                         <input matInput [(ngModel)]="userAdd.apellidos" name="apellidos" minlength="3" pattern="[a-zA-Z ]*" #addapellidos="ngModel" required>
-                        <mat-hint align="end" class="text-danger" *ngIf="addapellidos.hasError('pattern')">Apellidos inválidos
+                        <mat-hint align="end" class="text-danger" *ngIf="addapellidos.hasError('pattern')">Apellido inválido
                         </mat-hint>
                     </mat-form-field>
                 </div>
@@ -107,12 +115,15 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Clave </mat-label>
-                        <input type="password" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" #addclave="ngModel" required>
+                        <input type="password" [type]="hide ? 'password' : 'text'" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" #addclave="ngModel" required>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                         <mat-hint align="end">{{clave.value.length}} / 8</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Teléfono</mat-label>
-                        <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userAdd.telefono" name="telefono" placeholder="555-55-00" pattern="[0-9]*">
+                        <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userAdd.telefono" name="telefono" placeholder="55500066" pattern="[0-9]*">
                         <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                         <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                     </mat-form-field>
@@ -177,14 +188,14 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-6">
                         <mat-label>Correo alternativo</mat-label>
-                        <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
+                        <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
                         <mat-hint align="end" class="text-danger" *ngIf="updcorreo.hasError('pattern')">Correo inválido
                         </mat-hint>
                         <mat-icon matSuffix class="text-secondary">email</mat-icon>
                     </mat-form-field>
                     <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Teléfono</mat-label>
-                        <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="555-55-00" pattern="[0-9]*">
+                        <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="55500066" pattern="[0-9]*">
                         <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                         <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                     </mat-form-field>

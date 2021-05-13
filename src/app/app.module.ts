@@ -24,6 +24,7 @@ import { RolServiceService } from './Services/Rol/rol-service.service';
 import { AreaServiceService } from './Services/Area/area-service.service';
 import { MatMenuModule } from '@angular/material/menu';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,6 @@ import { MatMenuModule } from '@angular/material/menu';
     NgbToastModule,
     MatAutocompleteModule,
     MatMenuModule
-
   ],
   providers: [UsuarioServiceService, RolServiceService, AreaServiceService],
   bootstrap: [AppComponent]

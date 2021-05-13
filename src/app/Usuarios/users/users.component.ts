@@ -12,13 +12,19 @@ import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 
+
+
 export class UsersComponent implements OnInit {
+  hide = true; // Para ver password ingresada en modal #modalAddUser
+
+  
   // == Lista de usuarios con paginación
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -30,6 +36,13 @@ export class UsersComponent implements OnInit {
   ngAfterViewInit() { // Add paginación a datasource
     this.dataSource.paginator = this.paginator;
   }
+
+  // Filtra tabla por lo ingresado en tabla en campo #input
+  tableFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   // ===========
   roles: Rol[] = []; // --> para lista en select option #modalAddUser
   areas: Area[] = []; // --> para lista en select option #modalAddUser
