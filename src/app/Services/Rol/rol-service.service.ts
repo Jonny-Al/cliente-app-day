@@ -23,4 +23,8 @@ export class RolServiceService {
     return this.http.get<Rol[]>(`${this.url}/list`, { headers: this.headers });
   }
 
+  getFilterRol(rol: string) {
+    return this.http.get<Rol[]>(`${this.url}/filter?rol=${rol}`, { headers: this.headers });
+  }
+
 }

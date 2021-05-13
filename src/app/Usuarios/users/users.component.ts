@@ -12,45 +12,38 @@ import { NgForm } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 
-
-
 export class UsersComponent implements OnInit {
-  hide = true; // Para ver password ingresada en modal #modalAddUser
+  constructor(private modalService: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
-  
-  // == Lista de usuarios con paginación
+  // ======================  LISTA DE USUARIOS
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  listUsuarios: Usuario[] = [];// para lista en tabla de usuarios
-
-  displayedColumns: string[] = ['Nombres', 'Apellidos', 'Correo', 'Telefono', 'Cargo', 'Area', 'Acciones'];
-  dataSource = new MatTableDataSource<Usuario>(this.listUsuarios);
-
-  ngAfterViewInit() { // Add paginación a datasource
+  ngAfterViewInit() { // Add paginación a datasource -- no cambiar name a metodo
     this.dataSource.paginator = this.paginator;
   }
 
-  // Filtra tabla por lo ingresado en tabla en campo #input
+  listUsuarios: Usuario[] = [];// para lista en tabla de usuarios
+  displayedColumns: string[] = ['Nombres', 'Apellidos', 'Correo', 'Telefono', 'Cargo', 'Area', 'Acciones'];
+  dataSource = new MatTableDataSource<Usuario>(this.listUsuarios);
+
+  // == Filtra tabla por lo ingresado en tabla en campo #input
   tableFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // ===========
+  // ====================================================================
+
   roles: Rol[] = []; // --> para lista en select option #modalAddUser
   areas: Area[] = []; // --> para lista en select option #modalAddUser
 
-  constructor(private modalService: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
-
   ngOnInit() {
-
     // == Obtiene la lista de usuarios
     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
@@ -80,8 +73,9 @@ export class UsersComponent implements OnInit {
 
   }
 
-  // ==== METODO PARA REGISTRAR UN USUARIO
+  // ============= METODO PARA REGISTRAR UN USUARIO
 
+  hide = true; // Para ver password ingresada en modal #modalAddUser
   userAdd: Usuario = new Usuario(); // --> para formulario ngModel de registro en #modalAddUser
   // Agrega usuario desde el modal #modalAddUser
   addUser(usuario: Usuario, form: NgForm) {
@@ -109,7 +103,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ===== METODO PARA OBTENER USUARIO POR ID PARA ACTUALIZAR
+  // ============= METODO PARA OBTENER USUARIO POR ID PARA ACTUALIZAR
 
   userUpdate: Usuario = new Usuario(); // --> para formulario ngModel de actualizacion en #modalUpdateUser
 
@@ -126,7 +120,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // === Actualiza desde el modal #modalUpdateUser
+  // Actualiza usuario en #modalUpdateUser
   updateUser(usuario: Usuario) {
 
     validate(usuario).then(errors => {
@@ -152,21 +146,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ====== METODOS PARA ELIMINAR UN USUARIO
+  // ============= METODOS PARA ELIMINAR UN USUARIO DESDE #modalDeleteUser
 
   uselimina!: String;
-  usDelete!: number;
+  usdelete!: number;
 
   // == Seleccion de usuario que se va eliminar confirma abriendo el modal #modalDeleteUser
   confirmDeleteUser(id: number, nombreUser: String, apellidoUser: String, modal: any) {
-    this.usDelete = id;
+    this.usdelete = id;
     this.uselimina = nombreUser + '  ' + apellidoUser;
     this.openModal(modal, 'modal');
   }
 
   // Elimina desde el modal #modalDeleteUser
   deleteUser() {
-    this.serviceUsuario.deleteUser(this.usDelete).subscribe({
+    this.serviceUsuario.deleteUser(this.usdelete).subscribe({
       next: (response: any) => {
         if (response == true) {
           this.toastShow(`Se elimino a: ${this.uselimina}`, NgbToastType.Success);
@@ -179,10 +173,11 @@ export class UsersComponent implements OnInit {
   }
 
 
-  // ======  METODOS PARA MODALES
+  // =============  METODOS PARA MODALES
 
 
-  // ==== MUESTRA MODALES CON ALERTAS QUE PASAN EN EL SISTEMA  --> aun no se usa
+  //  Muestra modal con mensaje  --> aun no se usa
+
   classalert!: String;
   message!: String;
 
@@ -219,7 +214,6 @@ export class UsersComponent implements OnInit {
   }
 
   // ========== MENSAJES EN TOAST
-
   toastShow(message: any, type: any): void {
     this.closeModal();
 

@@ -23,4 +23,8 @@ export class AreaServiceService {
     return this.http.get<Area[]>(`${this.url}/list`, { headers: this.headers });
   }
 
+  getFilterArea(area: string) {
+    return this.http.get<Area[]>(`${this.url}/filter?area=${area}`, { headers: this.headers });
+  }
+
 }
