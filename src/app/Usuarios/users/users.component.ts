@@ -8,6 +8,7 @@ import { Rol } from 'src/app/Model/Rol';
 import { RolServiceService } from 'src/app/Services/Rol/rol-service.service';
 import { Area } from 'src/app/Model/Area';
 import { AreaServiceService } from 'src/app/Services/Area/area-service.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -55,7 +56,7 @@ export class UsersComponent implements OnInit {
   // ==== METODO PARA REGISTRAR UN USUARIO
 
   userAdd: Usuario = new Usuario();
-  addUser(usuario: Usuario) {
+  addUser(usuario: Usuario, form: NgForm) {
     usuario.estado = 1;
 
     validate(usuario).then(errors => {
@@ -67,6 +68,7 @@ export class UsersComponent implements OnInit {
           next: (response: any) => {
             if (response.message) {
               if (response.message == 'Agregado') {
+                form.onReset();
                 this.toastShow('Usuario registrado', NgbToastType.Success);
                 this.ngOnInit();
               }

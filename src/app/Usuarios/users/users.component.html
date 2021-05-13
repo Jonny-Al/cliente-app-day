@@ -48,7 +48,7 @@
 
     <!-- modal para agregar un usuario-->
     <ng-template #modalAddUser let-modal>
-        <form validate>
+        <form #formAdd="ngForm" validate>
             <div class="modal-header">
                 <h3 class="modal-title">Registrar usuario</h3>
                 <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -117,7 +117,7 @@
                 <button class="card card-small btn bg-light" (click)="closeModal()">
                     <span class="p-2">Cancelar</span>
                 </button>
-                <button class="card card-small btn btn-primary bg-primary" (click)="addUser(userAdd)">
+                <button class="card card-small btn btn-primary bg-primary" [disabled]="!formAdd.valid" (click)="addUser(userAdd,formAdd)">
                     <span class="p-2">Registrar</span>
                 </button>
             </div>
@@ -127,7 +127,7 @@
 
     <!-- modal para actualizar un usuario-->
     <ng-template #modalUpdateUser let-modal>
-        <form validate>
+        <form #formUpdate="ngForm" validate>
             <div class="modal-header">
                 <h3 class="modal-title">Actualizar usuario</h3>
                 <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -152,7 +152,7 @@
                 <div class="form-group row">
                     <mat-form-field class="example-full-width col-sm-6">
                         <mat-label>Correo alternativo</mat-label>
-                        <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
+                        <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+">
                         <mat-hint align="end" class="text-danger" *ngIf="updcorreo.hasError('pattern')">Correo inválido
                         </mat-hint>
                         <mat-icon matSuffix class="text-secondary">email</mat-icon>
@@ -169,7 +169,7 @@
                 <button class="card card-small btn bg-light" (click)="closeModal()">
                     <span class="p-2">Cancelar</span>
                 </button>
-                <button class="card card-small btn btn-primary bg-primary" (click)="updateUser(userUpdate)">
+                <button class="card card-small btn btn-primary bg-primary" [disabled]="!formUpdate.valid" (click)="updateUser(userUpdate)">
                     <span class="p-2">Actualizar</span>
                 </button>
             </div>
