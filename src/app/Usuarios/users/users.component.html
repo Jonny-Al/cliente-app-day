@@ -18,21 +18,21 @@
         <!--  end filter table -->
 
         <table mat-table [dataSource]="dataSource">
-            <!-- Position Column -->
             <ng-container matColumnDef="Nombres">
                 <th mat-header-cell *matHeaderCellDef> <b>Nombres </b> </th>
                 <td mat-cell *matCellDef="let us"> {{us.nombres}} </td>
             </ng-container>
 
-            <!-- Name Column -->
             <ng-container matColumnDef="Apellidos">
                 <th mat-header-cell *matHeaderCellDef> <b>Apellidos </b></th>
                 <td mat-cell *matCellDef="let us"> {{us.apellidos}} </td>
             </ng-container>
+
             <ng-container matColumnDef="Correo">
                 <th mat-header-cell *matHeaderCellDef> <b>Correo </b></th>
                 <td mat-cell *matCellDef="let us"> {{us.correo}} </td>
             </ng-container>
+
             <ng-container matColumnDef="Telefono">
                 <th mat-header-cell *matHeaderCellDef><b> Teléfono</b> </th>
                 <td mat-cell *matCellDef="let us"> {{us.telefono}} </td>
@@ -68,14 +68,19 @@
                             search
                         </mat-icon>
                     </a>
+                    <mat-icon *ngIf="us.estado == 2" style="font-size: 15px;" class="text-secondary">
+                        highlight_off
+                    </mat-icon>
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
         </table>
         <mat-paginator [pageSizeOptions]="[10, 20,30]" showFirstLastButtons></mat-paginator>
     </div>
+
 
     <!-- MODALES -->
 
@@ -89,22 +94,24 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="form-group row">
-                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                    <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                         <mat-label> Nombres</mat-label>
                         <input matInput [(ngModel)]="userAdd.nombres" name="nombres" minlength="3" pattern="[a-zA-Z ]*" #addnombres="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addnombres.hasError('pattern')">Nombre inválido
                         </mat-hint>
                     </mat-form-field>
-                    <mat-form-field class="example-full-width col-sm-6">
+                    <mat-form-field class="col-sm-6">
                         <mat-label>Apellidos</mat-label>
                         <input matInput [(ngModel)]="userAdd.apellidos" name="apellidos" minlength="3" pattern="[a-zA-Z ]*" #addapellidos="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addapellidos.hasError('pattern')">Apellido inválido
                         </mat-hint>
                     </mat-form-field>
                 </div>
+
                 <div class="form-group row">
-                    <mat-form-field class="example-full-width col-sm-12">
+                    <mat-form-field class="col-sm-12">
                         <mat-label>Correo electrónico </mat-label>
                         <input type="email" matInput [(ngModel)]="userAdd.correo" name="correo" placeholder="example@dominio.com" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" #addemail="ngModel" required>
                         <mat-hint align="end" class="text-danger" *ngIf="addemail.hasError('pattern')">Correo inválido
@@ -112,8 +119,9 @@
                         <mat-icon matSuffix class="text-secondary">email</mat-icon>
                     </mat-form-field>
                 </div>
+
                 <div class="form-group row">
-                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                    <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Clave </mat-label>
                         <input type="password" [type]="hide ? 'password' : 'text'" matInput #clave minlength="8" [(ngModel)]="userAdd.clave" name="clave" #addclave="ngModel" required>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -121,13 +129,14 @@
                         </button>
                         <mat-hint align="end">{{clave.value.length}} / 8</mat-hint>
                     </mat-form-field>
-                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                    <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Teléfono</mat-label>
                         <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userAdd.telefono" name="telefono" placeholder="55500066" pattern="[0-9]*">
                         <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                         <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                     </mat-form-field>
                 </div>
+
                 <div class="form-group">
                     <mat-form-field class="col-sm-12 mb-3 mb-sm-0">
                         <mat-label>Rol</mat-label>
@@ -147,8 +156,8 @@
                         </select>
                     </mat-form-field>
                 </div>
-            </div>
 
+            </div>
             <div class="modal-footer">
                 <button class="card card-small btn bg-light" (click)="closeModal()">
                     <span class="p-2">Cancelar</span>
@@ -171,35 +180,38 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <div class="form-group row">
-                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                    <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Nombres</mat-label>
                         <input matInput [(ngModel)]="userUpdate.nombres" name="nombres" minlength="3" #updnombres="ngModel" pattern="[a-zA-Z ]*" required>
                         <mat-hint align="end" class="text-danger" *ngIf="updnombres.hasError('pattern')">Nombre inválido
                         </mat-hint>
                     </mat-form-field>
-                    <mat-form-field class="example-full-width col-sm-6">
+                    <mat-form-field class="col-sm-6">
                         <mat-label>Apellidos</mat-label>
                         <input matInput [(ngModel)]="userUpdate.apellidos" name="apellidos" minlength="3" #updapellidos="ngModel" pattern="[a-zA-Z ]*" required>
                         <mat-hint align="end" class="text-danger" *ngIf="updapellidos.hasError('pattern')">Apellidos inválidos
                         </mat-hint>
                     </mat-form-field>
                 </div>
+
                 <div class="form-group row">
-                    <mat-form-field class="example-full-width col-sm-6">
+                    <mat-form-field class="col-sm-6">
                         <mat-label>Correo alternativo</mat-label>
                         <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
                         <mat-hint align="end" class="text-danger" *ngIf="updcorreo.hasError('pattern')">Correo inválido
                         </mat-hint>
                         <mat-icon matSuffix class="text-secondary">email</mat-icon>
                     </mat-form-field>
-                    <mat-form-field class="example-full-width col-sm-6 mb-3 mb-sm-0">
+                    <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                         <mat-label>Teléfono</mat-label>
                         <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="55500066" pattern="[0-9]*">
                         <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
                         <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
                     </mat-form-field>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button class="card card-small btn bg-light" (click)="closeModal()">

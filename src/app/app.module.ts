@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RolServiceService } from './Services/Rol/rol-service.service';
 import { AreaServiceService } from './Services/Area/area-service.service';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MatMenuModule } from '@angular/material/menu';
     HttpClientModule,
     NgbToastModule,
     MatAutocompleteModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCardModule
   ],
   providers: [UsuarioServiceService, RolServiceService, AreaServiceService],
   bootstrap: [AppComponent]

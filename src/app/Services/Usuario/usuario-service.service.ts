@@ -21,7 +21,7 @@ export class UsuarioServiceService {
   }
 
   getListUsers() {
-    return this.http.get<Usuario[]>(`${this.url}/list/assets`, { headers: this.headers });
+    return this.http.get<Usuario[]>(`${this.url}/list/all`, { headers: this.headers });
   }
 
   addUser(us: Usuario) {

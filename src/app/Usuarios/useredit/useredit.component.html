@@ -1,9 +1,219 @@
-<h1>Usuario consultado</h1>
-<br>
-<h3>{{ usInfo.nombres }}</h3>
-<br>
-<h3>{{ usInfo.apellidos }}</h3>
-<br>
-<h3>{{ usInfo.correo }}</h3>
-<br>
-<h3>{{ usInfo.telefono }}</h3>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-6 ">
+            <!-- CARDS LEFT -->
+            <mat-card class="mb-2">
+                <button [matMenuTriggerFor]="menu" class="btn btn-circle btn-sm float-right">
+                    <b>...</b>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item *ngIf="userUpdate.estado == 1">Bloquear</button>
+                    <button mat-menu-item *ngIf="userUpdate.estado == 2">Habilitar</button>
+                </mat-menu>
+
+                <mat-card-title>
+                    <mat-card-subtitle>Actualización</mat-card-subtitle>
+                </mat-card-title>
+
+                <form #formAdd="ngForm" validate>
+                    <mat-card-content>
+
+                        <div class="form-group row">
+                            <mat-form-field class=" col-sm-6 mb-sm-0">
+                                <mat-label>Nombres</mat-label>
+                                <input matInput [(ngModel)]="userUpdate.nombres" name="nombres" minlength="3" #updnombres="ngModel" pattern="[a-zA-Z ]*" required>
+                                <mat-hint align="end" class="text-danger" *ngIf="updnombres.hasError('pattern')">Nombre inválido
+                                </mat-hint>
+                            </mat-form-field>
+                            <mat-form-field class=" col-sm-6">
+                                <mat-label>Apellidos</mat-label>
+                                <input matInput [(ngModel)]="userUpdate.apellidos" name="apellidos" minlength="3" #updapellidos="ngModel" pattern="[a-zA-Z ]*" required>
+                                <mat-hint align="end" class="text-danger" *ngIf="updapellidos.hasError('pattern')">
+                                    Apellidos inválidos
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group row">
+                            <mat-form-field class=" col-sm-6 mb-sm-0">
+                                <mat-label>Correo</mat-label>
+                                <input type="email" matInput [(ngModel)]="userUpdate.correoalternativo" name="correo" placeholder="example@dominio.com" #updcorreo="ngModel" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required>
+                                <mat-hint align="end" class="text-danger" *ngIf="updcorreo.hasError('pattern')">Correo inválido
+                                </mat-hint>
+                                <mat-icon matSuffix class="text-secondary">email</mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class=" col-sm-6">
+                                <mat-label>Teléfono</mat-label>
+                                <input type="tel" matInput #telefono maxlength="12" [(ngModel)]="userUpdate.telefono" name="telefono" placeholder="55500066" pattern="[0-9]*">
+                                <mat-icon matSuffix class="text-secondary">phone_enabled</mat-icon>
+                                <mat-hint align="end">{{telefono.value.length}} / 12</mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group row">
+                            <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
+                                <mat-label>Clave </mat-label>
+                                <input type="password" [type]="hide ? 'password' : 'text'" matInput #clave minlength="8" [(ngModel)]="userUpdate.clave" name="clave" #addclave="ngModel" required>
+                                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-hint align="end">{{clave.value.length}} / 8</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
+                                <mat-label>Confirmar clave </mat-label>
+                                <input type="password" [type]="hide ? 'password' : 'text'" matInput #claveConfirm minlength="8" name="claveConfirm" required>
+                                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-hint align="end" class="text-danger" *ngIf="claveConfirm.value != clave.value && claveConfirm.value != ''">Las claves no coinciden
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-group row">
+                            <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
+                                <mat-label>Roles</mat-label>
+                                <input type="text" matInput [formControl]="selectRoles" [matAutocomplete]="cargos" (keyup)="filterRoles($event)">
+                                <mat-autocomplete #cargos="matAutocomplete">
+                                    <mat-option *ngFor="let rol of roles" [value]="rol.cargo">
+                                        {{rol.cargo}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                            <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
+                                <mat-label>Areas</mat-label>
+                                <input type="text" matInput [formControl]="selectAreas" [matAutocomplete]="grupos" (keyup)="filterAreas($event)">
+                                <mat-autocomplete #grupos="matAutocomplete">
+                                    <mat-option *ngFor="let area of areas" [value]="area.area">
+                                        {{area.area}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </div>
+
+                    </mat-card-content>
+
+                    <mat-card-actions class="mb-5">
+                        <button class="card card-small btn btn-success bg-success float-right" *ngIf="formAdd.valid && claveConfirm.value == clave.value && claveConfirm.value != '' ">
+                            <span class="p-2">Actualizar</span>
+                        </button>
+                    </mat-card-actions>
+                </form>
+            </mat-card>
+
+            <!-- ---------------------- -->
+
+            <mat-card class="mb-2">
+                <mat-card-header>
+
+                    <mat-card-title>
+                        <mat-card-subtitle>Registro</mat-card-subtitle>
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content>
+                    <div class="form-group row">
+                        <mat-form-field class=" col-sm-6 mb-sm-0">
+                            <mat-label>Nombres</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field class=" col-sm-6">
+                            <mat-label>Apelldos</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group row">
+                        <mat-form-field class=" col-sm-6 mb-sm-0">
+                            <mat-label>Correo</mat-label>
+                            <input matInput>
+                        </mat-form-field>
+                        <mat-form-field class="col-sm-6">
+                            <mat-label>Teléfono</mat-label>
+                            <input matInput #postalCode maxlength="10" placeholder="5550011">
+                            <mat-hint align="end">{{postalCode.value.length}} / 10</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group row">
+                        <mat-form-field appearance="fill" class="col-sm-6 mb-sm-0">
+                            <mat-label>Ciudad</mat-label>
+                            <mat-select>
+                                <mat-option value="option1">Bogotá</mat-option>
+                                <mat-option value="option2">Medellin</mat-option>
+                                <mat-option value="option3">Cali</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="col-sm-6 mb-sm-0">
+                            <mat-label>Localidad</mat-label>
+                            <mat-select>
+                                <mat-option value="option1">Suba</mat-option>
+                                <mat-option value="option2">Usaquen</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+
+                <mat-card-actions class="mb-5">
+                    <button class="card card-small btn btn-primary bg-primary float-right movement">
+                        <span class="p-2">Registrar</span>
+                    </button>
+                </mat-card-actions>
+
+            </mat-card>
+        </div>
+
+        <!--     CARDS RIGHT     -->
+
+
+        <div class="col-lg-6 ">
+            <mat-card>
+                <mat-card-header class="mb-4">
+
+                    <mat-card-title>
+                        <mat-card-subtitle>Utilidades</mat-card-subtitle>
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content>
+
+                    <div class="form-group row">
+                        <div class=" col-sm-6 mb-sm-0">
+                            <div class="p-4 bg-primary text-white">.bg-primary</div>
+                            <div class="p-4 bg-secondary text-white">.bg-secondary</div>
+                            <div class="p-4 bg-success text-white">.bg-success</div>
+                            <div class="p-4 bg-danger text-white">.bg-danger</div>
+                            <div class="p-4 bg-warning">.bg-warning</div>
+                            <div class="p-4 bg-info text-white">.bg-info</div>
+                            <div class="p-4 bg-light">.bg-light</div>
+                            <div class="p-4 bg-white">.bg-white</div>
+                            <div class="p-4 bg-dark text-white">.bg-dark</div>
+                            <div class="p-4 bg-black text-white">.bg-black</div>
+                            <div class="p-4 bg-transparent">.bg-transparent</div>
+                        </div>
+                        <div class=" col-sm-6 mb-sm-0">
+                            <div class="d-flex align-items-center">
+                                <div class="me-2">25%</div>
+                                <div class="progress me-2" style="width: 8rem; height: 0.25rem">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex align-items-center p-2 text-primary">
+                                    <div class="fst-button">Open Report</div>
+                                    <i class="material-icons icon-sm ms-1">chevron_right</i>
+                                </div>
+                                <span class="badge bg-primary text-white">Processing</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+
+            </mat-card>
+
+        </div>
+
+    </div>
+</div>
