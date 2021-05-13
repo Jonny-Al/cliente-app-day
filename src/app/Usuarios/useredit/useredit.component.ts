@@ -13,10 +13,8 @@ export class UsereditComponent implements OnInit {
   constructor(private serviceUsuario: UsuarioServiceService, private activatedRoute: ActivatedRoute, private router: Router) { }
   usInfo: Usuario = new Usuario();
 
-  ngOnInit(): void {
-    let idus = this.activatedRoute.snapshot.params['usuario'];
-
-    this.serviceUsuario.searchUsuario(idus).subscribe({
+  ngOnInit() {
+    this.serviceUsuario.searchUsuario(this.activatedRoute.snapshot.params['id']).subscribe({
       next: (response: any) => {
         this.usInfo = response;
       }, error: () => {
