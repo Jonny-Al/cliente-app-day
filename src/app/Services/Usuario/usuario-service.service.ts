@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Usuario } from '../../Model/Usuario';
 import { Util } from '../../Utilidades/Util';
 
@@ -20,7 +20,6 @@ export class UsuarioServiceService {
     });
   }
 
-
   getListUsers() {
     return this.http.get<Usuario[]>(`${this.url}/list/assets`, { headers: this.headers });
   }
@@ -40,18 +39,4 @@ export class UsuarioServiceService {
   deleteUser(uselimna: number) {
     return this.http.delete(`${this.url}/delete?id=${uselimna}`);
   }
-
-  toasts: any[] = [];
-
-  // Push new Toasts to array with content and options
-  show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-    this.toasts.push({ textOrTpl, ...options });
-  }
-
-  // Callback method to remove Toast DOM element from view
-  remove(toast: any) {
-    this.toasts = this.toasts.filter(t => t !== toast);
-  }
-
-
 }

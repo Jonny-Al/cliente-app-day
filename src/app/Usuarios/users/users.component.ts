@@ -18,14 +18,15 @@ import { NgForm } from '@angular/forms';
 
 export class UsersComponent implements OnInit {
 
-  usuarios: Usuario[] = [];
-  roles: Rol[] = [];
-  areas: Area[] = [];
+  usuarios: Usuario[] = []; // --> para lista en tabla de usuarios
+  roles: Rol[] = []; // --> para lista en select option #modalAddUser
+  areas: Area[] = []; // --> para lista en select option #modalAddUser
 
   constructor(private modalService: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
   ngOnInit() {
 
+    // == Obtiene la lista de usuarios
     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
         this.usuarios = response;
@@ -35,6 +36,7 @@ export class UsersComponent implements OnInit {
       }
     });
 
+    // == Obtiene la lista de roles
     this.serviceRol.getListRoles().subscribe({
       next: (response: any) => {
         this.roles = response;
@@ -43,6 +45,7 @@ export class UsersComponent implements OnInit {
       }
     });
 
+    // == Obtiene la lista de areas
     this.serviceArea.getListAreas().subscribe({
       next: (response: any) => {
         this.areas = response;
@@ -55,7 +58,8 @@ export class UsersComponent implements OnInit {
 
   // ==== METODO PARA REGISTRAR UN USUARIO
 
-  userAdd: Usuario = new Usuario();
+  userAdd: Usuario = new Usuario(); // --> para formulario ngModel de registro en #modalAddUser
+  // Agrega usuario desde el modal #modalAddUser
   addUser(usuario: Usuario, form: NgForm) {
     usuario.estado = 1;
 
@@ -68,7 +72,7 @@ export class UsersComponent implements OnInit {
           next: (response: any) => {
             if (response.message) {
               if (response.message == 'Agregado') {
-                form.onReset();
+                form.onReset(); // Limpia los campos del formulario
                 this.toastShow('Usuario registrado', NgbToastType.Success);
                 this.ngOnInit();
               }
@@ -83,8 +87,9 @@ export class UsersComponent implements OnInit {
 
   // ===== METODO PARA OBTENER USUARIO POR ID PARA ACTUALIZAR
 
-  userUpdate: Usuario = new Usuario();
+  userUpdate: Usuario = new Usuario(); // --> para formulario ngModel de actualizacion en #modalUpdateUser
 
+  // Al seleccionar usuario en lapiz de table obtiene los datos de service y refleja en modal #modalUpdateUser 
   editUser(id: number, modal: any) {
     this.userUpdate.id = id;
     this.serviceUsuario.searchUsuario(id).subscribe({
@@ -97,6 +102,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  // === Actualiza desde el modal #modalUpdateUser
   updateUser(usuario: Usuario) {
 
     validate(usuario).then(errors => {
@@ -122,17 +128,19 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  // ====== METODO PARA ELIMINAR UN USUARIO
+  // ====== METODOS PARA ELIMINAR UN USUARIO
 
   uselimina!: String;
   usDelete!: number;
 
+  // == Seleccion de usuario que se va eliminar confirma abriendo el modal #modalDeleteUser
   confirmDeleteUser(id: number, nombreUser: String, apellidoUser: String, modal: any) {
     this.usDelete = id;
     this.uselimina = nombreUser + '  ' + apellidoUser;
     this.openModal(modal, 'modal');
   }
 
+  // Elimina desde el modal #modalDeleteUser
   deleteUser() {
     this.serviceUsuario.deleteUser(this.usDelete).subscribe({
       next: (response: any) => {
@@ -149,6 +157,8 @@ export class UsersComponent implements OnInit {
 
   // ======  METODOS PARA MODALES
 
+
+  // ==== MUESTRA MODALES CON ALERTAS QUE PASAN EN EL SISTEMA  --> aun no se usa
   classalert!: String;
   message!: String;
 
@@ -184,7 +194,7 @@ export class UsersComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  // ==========
+  // ========== MENSAJES EN TOAST
 
   toastShow(message: any, type: any): void {
     this.closeModal();
@@ -200,10 +210,4 @@ export class UsersComponent implements OnInit {
 
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
