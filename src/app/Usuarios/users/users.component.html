@@ -147,8 +147,8 @@
                 <div class="form-group">
                     <mat-form-field class="col-sm-12 mb-3 mb-sm-0">
                         <mat-label>Rol</mat-label>
-                        <select matNativeControl [(ngModel)]="userAdd.Idrol" name="Idrol" required>
-                            <option class="form-control" *ngFor="let rol of roles" value="{{rol.Idrol}}">
+                        <select matNativeControl [(ngModel)]="userAdd.IdRol" name="IdRol" required>
+                            <option class="form-control" *ngFor="let rol of roles" value="{{rol.IdRol}}">
                                 {{rol.cargo}}
                             </option>
                         </select>
@@ -224,7 +224,7 @@
                 <button class="card card-small btn bg-light" (click)="closeModal()">
                     <span class="p-2">Cancelar</span>
                 </button>
-                <button class="card card-small btn btn-primary bg-primary" [disabled]="!formUpdate.valid" (click)="updateUser(userUpdate)">
+                <button class="card card-small btn btn-primary bg-primary" [disabled]="!formUpdate.valid" (click)="updateUser(userUpdate,'Personal')">
                     <span class="p-2">Actualizar</span>
                 </button>
             </div>

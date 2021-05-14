@@ -1,4 +1,4 @@
 export class Rol{
-    Idrol!: number;
+    IdRol!: number;
     cargo: String = "";
 }

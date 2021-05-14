@@ -1,3 +1,4 @@
+
 export class Util {
     // Url path para consumir service rest
     static getUrl() {

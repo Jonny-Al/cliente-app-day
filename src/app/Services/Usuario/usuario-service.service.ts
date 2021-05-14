@@ -25,11 +25,15 @@ export class UsuarioServiceService {
   }
 
   addUser(us: Usuario) {
-    return this.http.post(`${this.url}/add`, us, { responseType: 'json' });
+    return this.http.post(`${this.url}/add`, us, { headers: this.headers });
   }
 
-  updateUserInfoPersonal(usuario: Usuario) {
-    return this.http.put(`${this.url}/update/information/Personal`, usuario, { responseType: 'json' });
+  updateUserInfo(usuario: Usuario, type: String) {
+    return this.http.put(`${this.url}/update/information/${type}`, usuario, { headers: this.headers });
+  }
+
+  updateStatusUser(status: number, id: number) {
+    return this.http.put(`${this.url}/update/status/${status}?id=${id}`, null, { headers: this.headers });
   }
 
   searchUsuario(idus: number) {

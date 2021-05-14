@@ -29,7 +29,7 @@ export class Usuario {
     estado!: number;
 
     @MinLength(1)
-    Idrol: number | undefined;
+    IdRol: number | undefined;
 
     @MinLength(1)
     IdArea: number | undefined;

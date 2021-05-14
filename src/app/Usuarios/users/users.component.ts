@@ -19,7 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class UsersComponent implements OnInit {
-  constructor(private modalService: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
+  constructor(private modalService: NgbModal,private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
   // ======================  LISTA DE USUARIOS
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -121,14 +121,14 @@ export class UsersComponent implements OnInit {
   }
 
   // Actualiza usuario en #modalUpdateUser
-  updateUser(usuario: Usuario) {
+  updateUser(usuario: Usuario, type: String) {
 
     validate(usuario).then(errors => {
       if (errors.length > 0) {
         console.log('Error de campos al actualizar usuario: ', errors); // Imprime errores que encuentra en atributos
       } else {
         // Update usuario
-        this.serviceUsuario.updateUserInfoPersonal(usuario).subscribe({
+        this.serviceUsuario.updateUserInfo(usuario, type).subscribe({
           next: (response: any) => {
             if (response.message) {
               if (response.message == 'Actualizado') {
@@ -214,7 +214,7 @@ export class UsersComponent implements OnInit {
   }
 
   // ========== MENSAJES EN TOAST
-  toastShow(message: any, type: any): void {
+  toastShow(message: string, type: any): void {
     this.closeModal();
 
     const toast: NgbToast = {
