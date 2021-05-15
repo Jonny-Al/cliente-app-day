@@ -6,7 +6,6 @@ import { RolServiceService } from 'src/app/Services/Rol/rol-service.service';
 import { UsuarioServiceService } from 'src/app/Services/Usuario/usuario-service.service';
 import { Rol } from 'src/app/Model/Rol';
 import { Area } from 'src/app/Model/Area';
-import { FormControl } from '@angular/forms';
 import { NgbToast, NgbToastService, NgbToastType } from 'ngb-toast';
 
 @Component({
@@ -34,11 +33,12 @@ export class UsereditComponent implements OnInit {
         this.router.navigate(['usuarios']);
       }
     });
+
   }
 
 
-  selectRoles = new FormControl();
   filterRoles(event: Event): any {
+
     const filter = (event.target as HTMLInputElement).value;
     this.rolService.getFilterRol(filter).subscribe({
       next: (response: any) => {
@@ -47,10 +47,11 @@ export class UsereditComponent implements OnInit {
         }
       }
     });
+
   }
 
-  selectAreas = new FormControl();
   filterAreas(event: Event): any {
+
     const filter = (event.target as HTMLInputElement).value;
     this.areaService.getFilterArea(filter).subscribe({
       next: (response: any) => {
@@ -59,22 +60,49 @@ export class UsereditComponent implements OnInit {
         }
       }
     })
+
   };
 
   // === Actualización completa de usuario
 
   updateCompleteInformation(us: Usuario, claveConfirm: string) {
 
-    us.IdRol = this.selectRoles.value;
-    us.IdArea = this.selectAreas.value;
-
-    this.serviceUsuario.updateUserInfo(us, 'Completa').subscribe({
-      next: (response: any) => {
-        console.log('Se actualizo: ', response);
-      }, error: (response: any) => {
-        console.log('Error al actualizar el usuario: ', response);
+    if (this.roles.length > 0) {
+      for (let r of this.roles) {
+        if (us.Rol.cargo == r.cargo) {
+          us.IdRol = r.IdRol;
+          break;
+        }
       }
-    });
+    } else {
+      us.IdRol = this.userUpdate.Rol.IdRol;
+    }
+
+    if (this.areas.length > 0) {
+      for (let a of this.areas) {
+        if (us.Area.area == a.area) {
+          us.IdArea = a.IdArea;
+          break;
+        }
+      }
+    } else {
+      us.IdArea = this.userUpdate.Area.IdArea;
+    }
+
+    if (us.clave == claveConfirm && us.IdArea != null && us.IdRol != null) {
+      this.serviceUsuario.updateUserInfo(us, 'Completa').subscribe({
+        next: (response: any) => {
+          if (response.message == "Actualizado") {
+            this.toastShow(`El usuario ${this.userUpdate.nombres} ${this.userUpdate.apellidos} fue actualizado`, NgbToastType.Success);
+          } else {
+            this.toastShow(`${response.message}`, NgbToastType.Danger);
+          }
+        }, error: (response: any) => {
+          this.toastShow('Usuario no actualizado', NgbToastType.Warning);
+          console.log('Error al actualizar el usuario: ', response);
+        }
+      });
+    } 
   }
 
 
@@ -86,7 +114,11 @@ export class UsereditComponent implements OnInit {
           this.toastShow('Estado no actualizado', NgbToastType.Warning);
         } else {
           this.userUpdate = response;
-          this.toastShow('Estado actualizado', NgbToastType.Success);
+          if (status == 1) {
+            this.toastShow(`${this.userUpdate.nombres} ${this.userUpdate.apellidos} esta activo`, NgbToastType.Success);
+          } else {
+            this.toastShow(`${this.userUpdate.nombres} ${this.userUpdate.apellidos} esta inactivo`, NgbToastType.Warning);
+          }
         }
       }
     })

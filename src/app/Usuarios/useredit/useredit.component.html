@@ -9,7 +9,7 @@
                     <b>...</b>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngIf="userUpdate.estado == 1" (click)="updateStatus(2)">Bloquear</button>
+                    <button mat-menu-item *ngIf="userUpdate.estado == 1" (click)="updateStatus(2)">Inactivar</button>
                     <button mat-menu-item *ngIf="userUpdate.estado == 2" (click)="updateStatus(1)">Habilitar</button>
                 </mat-menu>
 
@@ -75,18 +75,18 @@
                         <div class="form-group row">
                             <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                                 <mat-label>Roles</mat-label>
-                                <input type="text" matInput [formControl]="selectRoles" [matAutocomplete]="cargos" (keyup)="filterRoles($event)">
+                                <input type="text" matInput [matAutocomplete]="cargos" (keyup)="filterRoles($event)" name="cargo" [(ngModel)]="userUpdate.Rol.cargo" required>
                                 <mat-autocomplete #cargos="matAutocomplete">
-                                    <mat-option *ngFor="let rol of roles" [value]="rol.IdRol">
+                                    <mat-option *ngFor="let rol of roles" [value]="rol.cargo">
                                         {{rol.cargo}}
                                     </mat-option>
                                 </mat-autocomplete>
                             </mat-form-field>
                             <mat-form-field class="col-sm-6 mb-3 mb-sm-0">
                                 <mat-label>Areas</mat-label>
-                                <input type="text" matInput [formControl]="selectAreas" [matAutocomplete]="grupos" (keyup)="filterAreas($event)">
+                                <input type="text" matInput #inputArea [matAutocomplete]="grupos" (keyup)="filterAreas($event)" name="area" [(ngModel)]="userUpdate.Area.area" required>
                                 <mat-autocomplete #grupos="matAutocomplete">
-                                    <mat-option *ngFor="let area of areas" [value]="area.IdArea">
+                                    <mat-option *ngFor="let area of areas" [value]="area.area">
                                         {{area.area}}
                                     </mat-option>
                                 </mat-autocomplete>
