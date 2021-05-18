@@ -96,7 +96,7 @@ export class UsersComponent implements OnInit {
               }
             }
           }, error: (response: any) => {
-            console.log('Error de petición: ', response);
+            console.log('Error de petición en controller addUser: ', response);
           }
         });
       }

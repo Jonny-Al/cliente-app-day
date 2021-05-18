@@ -23,7 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RolServiceService } from './Services/Rol/rol-service.service';
 import { AreaServiceService } from './Services/Area/area-service.service';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { ErrosComponent } from './Pages/erros/erros.component';
 
 @NgModule({
