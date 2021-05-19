@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthConfig, NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -8,13 +8,14 @@ import { AuthConfig, NullValidationHandler, OAuthService } from 'angular-oauth2-
 })
 export class AppComponent {
 
-  username!: string;
-  @Input() isLogged!: boolean;
-  @Input() isAdmin!: boolean;
-
   constructor(private oauthService: OAuthService) {
     this.configure();
   }
+
+  username!: string;
+  isLogged: boolean | undefined;
+  isAdmin: boolean | undefined;
+
 
   authConfig: AuthConfig = {
     issuer: 'http://localhost:8080/auth/realms/tutorial',
@@ -48,7 +49,6 @@ export class AppComponent {
     const payload = token.split('.')[1];
     const payloadDecodeJson = atob(payload);
     const payloadDecode = JSON.parse(payloadDecodeJson);
-    console.log(payloadDecode.realm_access.roles);
     return payloadDecode.realm_access.roles.indexOf('realm-admin') !== -1;
   }
 

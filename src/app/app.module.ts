@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './Usuarios/users/users.component';
 import { UsereditComponent } from './Usuarios/useredit/useredit.component';
-import { ErrosComponent } from './Pages/erros/erros.component';
+import { ErrorsComponent } from './Pages/Errors/errors.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,13 +29,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { HomeComponent } from './Pages/Home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     UsereditComponent,
-    ErrosComponent
+    ErrorsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

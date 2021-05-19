@@ -62,7 +62,6 @@
             </a>
         </mat-menu>
         <!-------------------------->
-
     </div>
     <!-- end options -->
 
@@ -71,15 +70,10 @@
         Ingresar
     </button>
 
-
     <button *ngIf="isLogged" mat-icon-button [matMenuTriggerFor]="menu" style="margin-right: 10px;">
         <mat-icon style="font-size: 20px;">texture</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="font-weight-light text-dark">
-        <a mat-menu-item [routerLink]="['/usuarios']">
-            <mat-icon>groups</mat-icon>
-            Usuarios
-        </a>
         <a mat-menu-item>
             <mat-icon>miscellaneous_services</mat-icon>
             Configurar
@@ -90,6 +84,9 @@
         </a>
     </mat-menu>
 </div>
+<!--  pagina  home -->
+
+
 
 <div class="content" role="main"></div>
 <ngb-toast-container></ngb-toast-container>
