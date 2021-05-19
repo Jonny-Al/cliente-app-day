@@ -4,65 +4,63 @@
         />
     </a>
     <!-- options -->
-    <div *ngIf="isLogged">
-        <a class="font-weight-light text-white" *ngIf="isLogged" [routerLink]="['/usuarios']">
-            Usuarios
+    <a class="font-weight-light text-white" *ngIf="isLogged" [routerLink]="['/usuarios']">
+        Usuarios
+    </a>
+    <!-- menu tareas -->
+    <button mat-button [matMenuTriggerFor]="menuTasks" class="ml-2 font-weight-light ">
+        Tareas
+    </button>
+    <mat-menu #menuTasks="matMenu" class="font-weight-light text-dark">
+        <a mat-menu-item>
+            <mat-icon>home</mat-icon>
+            Tareas grupales
         </a>
-        <!-- menu tareas -->
-        <button mat-button [matMenuTriggerFor]="menuTasks" class="ml-2 font-weight-light ">
-            Tareas
-        </button>
-        <mat-menu #menuTasks="matMenu" class="font-weight-light text-dark">
-            <a mat-menu-item>
-                <mat-icon>home</mat-icon>
-                Tareas grupales
-            </a>
 
-            <a mat-menu-item>
-                <mat-icon>groups</mat-icon>
-                Mis tareas
-            </a>
-            <a mat-menu-item>
-                <mat-icon>miscellaneous_services</mat-icon>
-                Historial de tareas
-            </a>
-        </mat-menu>
-        <!-------------------------->
+        <a mat-menu-item>
+            <mat-icon>groups</mat-icon>
+            Mis tareas
+        </a>
+        <a mat-menu-item>
+            <mat-icon>miscellaneous_services</mat-icon>
+            Historial de tareas
+        </a>
+    </mat-menu>
+    <!-------------------------->
 
-        <!-- menu tareas -->
-        <button mat-button [matMenuTriggerFor]="menuAreaAndRoles" class="font-weight-light ">
-            Grupos
-        </button>
-        <mat-menu #menuAreaAndRoles="matMenu" class="font-weight-light text-dark">
-            <a mat-menu-item>
-                <mat-icon>home</mat-icon>
-                Areas
-            </a>
+    <!-- menu tareas -->
+    <button mat-button [matMenuTriggerFor]="menuAreaAndRoles" class="font-weight-light ">
+        Grupos
+    </button>
+    <mat-menu #menuAreaAndRoles="matMenu" class="font-weight-light text-dark">
+        <a mat-menu-item>
+            <mat-icon>home</mat-icon>
+            Areas
+        </a>
 
-            <a mat-menu-item>
-                <mat-icon>groups</mat-icon>
-                Cargos
-            </a>
-        </mat-menu>
-        <!-------------------------->
+        <a mat-menu-item>
+            <mat-icon>groups</mat-icon>
+            Cargos
+        </a>
+    </mat-menu>
+    <!-------------------------->
 
-        <!-- menu tareas -->
-        <button mat-button [matMenuTriggerFor]="menuObjetos" class="font-weight-light ">
-            Implementos
-        </button>
-        <mat-menu #menuObjetos="matMenu" class="font-weight-light text-dark">
-            <a mat-menu-item>
-                <mat-icon>home</mat-icon>
-                Registrados
-            </a>
+    <!-- menu tareas -->
+    <button mat-button [matMenuTriggerFor]="menuObjetos" class="font-weight-light ">
+        Implementos
+    </button>
+    <mat-menu #menuObjetos="matMenu" class="font-weight-light text-dark">
+        <a mat-menu-item>
+            <mat-icon>home</mat-icon>
+            Registrados
+        </a>
 
-            <a mat-menu-item>
-                <mat-icon>groups</mat-icon>
-                Apartados
-            </a>
-        </mat-menu>
-        <!-------------------------->
-    </div>
+        <a mat-menu-item>
+            <mat-icon>groups</mat-icon>
+            Apartados
+        </a>
+    </mat-menu>
+    <!-------------------------->
     <!-- end options -->
 
     <div class="spacer"></div>
@@ -85,8 +83,6 @@
     </mat-menu>
 </div>
 <!--  pagina  home -->
-
-
 
 <div class="content" role="main"></div>
 <ngb-toast-container></ngb-toast-container>

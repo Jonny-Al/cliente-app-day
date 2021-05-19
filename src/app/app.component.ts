@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthConfig, NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -16,7 +17,6 @@ export class AppComponent {
   isLogged: boolean | undefined;
   isAdmin: boolean | undefined;
 
-
   authConfig: AuthConfig = {
     issuer: 'http://localhost:8080/auth/realms/tutorial',
     redirectUri: window.location.origin,// + '/index.html',
@@ -27,6 +27,7 @@ export class AppComponent {
   };
 
   configure(): void {
+
     this.oauthService.configure(this.authConfig);
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
     this.oauthService.setupAutomaticSilentRefresh();
@@ -35,6 +36,8 @@ export class AppComponent {
       if (this.oauthService.getIdentityClaims()) {
         this.isLogged = this.getIsLogged();
         this.isAdmin = this.getIsAdmin();
+      } else {
+        this.oauthService.initImplicitFlowInternal();
       }
     }));
   }
