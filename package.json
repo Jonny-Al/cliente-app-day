@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.2.13",
     "@angular/router": "~11.2.13",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
+    "angular-oauth2-oidc": "^10.0.3",
     "bootstrap": "^4.5.0",
     "class-validator": "^0.13.1",
     "ngb-toast": "0.0.6",
