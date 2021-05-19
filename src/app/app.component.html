@@ -4,7 +4,7 @@
         />
     </a>
     <!-- options -->
-    <a class="font-weight-light text-white" *ngIf="isLogged" [routerLink]="['/usuarios']">
+    <a class="font-weight-light text-white" [routerLink]="['/usuarios']">
         Usuarios
     </a>
     <!-- menu tareas -->
@@ -62,14 +62,10 @@
     </mat-menu>
     <!-------------------------->
     <!-- end options -->
-
     <div class="spacer"></div>
-    <button *ngIf="!isLogged" mat-button style="margin-right: 10px;" (click)="login()">
-        Ingresar
-    </button>
-
-    <button *ngIf="isLogged" mat-icon-button [matMenuTriggerFor]="menu" style="margin-right: 10px;">
-        <mat-icon style="font-size: 20px;">texture</mat-icon>
+    <span class="font-weight-light" style="color: rgb(191, 192, 194);">{{ username }}</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" style="margin-right: 10px;" class="text-info">
+        <mat-icon style="font-size: 20px;">perm_identity</mat-icon>
     </button>
     <mat-menu #menu="matMenu" class="font-weight-light text-dark">
         <a mat-menu-item>

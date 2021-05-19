@@ -4,13 +4,14 @@ import { ErrorsComponent } from './Pages/Errors/errors.component';
 import { HomeComponent } from './Pages/Home/home.component';
 import { UsereditComponent } from './Usuarios/useredit/useredit.component';
 import { UsersComponent } from './Usuarios/users/users.component';
+import { AuthGuard } from './Utilidades/app.guard';
+//import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: 'usuarios', component: UsersComponent },
-  { path: 'usuario/:id', component: UsereditComponent },
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: '**', component: ErrorsComponent }
+  { path: 'usuarios', component: UsersComponent, canActivate: [AuthGuard] },
+  { path: 'usuario/:id', component: UsereditComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '**', component: ErrorsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

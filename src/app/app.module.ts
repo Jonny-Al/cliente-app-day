@@ -1,10 +1,13 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
+// ===== COMPONENTES
 import { AppComponent } from './app.component';
 import { UsersComponent } from './Usuarios/users/users.component';
 import { UsereditComponent } from './Usuarios/useredit/useredit.component';
+import { HomeComponent } from './Pages/Home/home.component';
 import { ErrorsComponent } from './Pages/Errors/errors.component';
 
+// ===== MATERIAL
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,25 +22,28 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSelectModule } from '@angular/material/select';
-import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
 import { HttpClientModule } from '@angular/common/http'; // Se agrega los servicios que se van a usar
 import { NgbToastModule } from 'ngb-toast';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { RolServiceService } from './Services/Rol/rol-service.service';
-import { AreaServiceService } from './Services/Area/area-service.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
-import { HomeComponent } from './Pages/Home/home.component';
+// ===== KEYCLOAK
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { initializeKeycloak } from './Utilidades/app.init';
+
+// ====== SERVICIOS HTTP
+//import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
+//import { RolServiceService } from './Services/Rol/rol-service.service';
+//import { AreaServiceService } from './Services/Area/area-service.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     UsereditComponent,
-    ErrorsComponent,
-    HomeComponent
+    HomeComponent,
+    ErrorsComponent
   ],
   imports: [
     BrowserModule,
@@ -60,14 +66,14 @@ import { HomeComponent } from './Pages/Home/home.component';
     MatAutocompleteModule,
     MatMenuModule,
     MatCardModule,
-    OAuthModule.forRoot({
-      resourceServer: {
-        allowedUrls: ['hhttp://localhost:8081/api'],
-        sendAccessToken: true
-      }
-    })
+    KeycloakAngularModule
   ],
-  providers: [UsuarioServiceService, RolServiceService, AreaServiceService],
+  providers: [{
+    provide: APP_INITIALIZER,
+    useFactory: initializeKeycloak,
+    multi: true,
+    deps: [KeycloakService],
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
