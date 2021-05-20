@@ -13,7 +13,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker'; // DatePicker
+import { MatNativeDateModule } from '@angular/material/core'; // DatePicker
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
@@ -52,6 +53,7 @@ import { initializeKeycloak } from './Utilidades/app.init';
     MatButtonModule,
     MatTabsModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatIconModule,
     MatExpansionModule,
     MatTableModule,

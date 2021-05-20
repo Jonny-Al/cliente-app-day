@@ -7,6 +7,8 @@ import { UsuarioServiceService } from 'src/app/Services/Usuario/usuario-service.
 import { Rol } from 'src/app/Model/Rol';
 import { Area } from 'src/app/Model/Area';
 import { NgbToast, NgbToastService, NgbToastType } from 'ngb-toast';
+import { FormGroup, FormControl } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-useredit',
@@ -102,7 +104,8 @@ export class UsereditComponent implements OnInit {
           console.log('Error al actualizar el usuario: ', response);
         }
       });
-    } 
+    }
+
   }
 
 
@@ -121,7 +124,7 @@ export class UsereditComponent implements OnInit {
           }
         }
       }
-    })
+    });
   }
 
 
@@ -136,6 +139,29 @@ export class UsereditComponent implements OnInit {
       timeInSeconds: 8,
     }
     this.toastService.show(toast);
+  }
+
+  // ====== FILTRADO POR FECHAS
+
+  pipe = new DatePipe('en-US');
+
+  range = new FormGroup({
+    dpStart: new FormControl(),
+    dpEnd: new FormControl()
+  });
+
+  dpInicio = new FormControl();
+
+  filterForDate() {
+
+    const start = this.pipe.transform(this.range.value.dpStart, 'dd/MM/yyyy');
+    const end = this.pipe.transform(this.range.value.dpEnd, 'dd/MM/yyyy');
+    const dpinicio = this.pipe.transform(this.dpInicio.value, 'dd-MM-yyyy');
+
+    console.log(`Inicio: ${start}`);
+    console.log(`Final: ${end}`);
+    console.log(`dpInicio: ${dpinicio}`);
+
   }
 
 
