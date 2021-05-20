@@ -52,16 +52,13 @@
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let us">
 
-                    <button type="button" class="btn movement">
-                        <mat-icon color="primary" (click)="editUser(us.id,modalUpdateUser)" class="btn-group"
-                            role="group">mode
+                    <button type="button" class="btn movement" (click)="editUser(us.id,modalUpdateUser)">
+                        <mat-icon color="primary" class="btn-group" role="group">mode
                         </mat-icon>
                     </button>
 
-                    <button type="button" class="btn movement">
-                        <mat-icon color="warn"
-                            (click)="confirmDeleteUser(us.id,us.nombres,us.apellidos,modalDeleteUser)" class="btn-group"
-                            role="group">
+                    <button type="button" class="btn movement" (click)="confirmDeleteUser(us.id,us.nombres,us.apellidos,modalDeleteUser)">
+                        <mat-icon color="warn" class="btn-group" role="group">
                             delete_outline
                         </mat-icon>
                     </button>
