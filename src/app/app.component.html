@@ -72,13 +72,35 @@
             <mat-icon>miscellaneous_services</mat-icon>
             Configurar
         </a>
-        <a mat-menu-item (click)="logout()">
+        <a mat-menu-item (click)="openModal(modalLogout)">
             <mat-icon>logout</mat-icon>
             Cerrar sesion
         </a>
     </mat-menu>
 </div>
-<!--  pagina  home -->
+<!--  MODAL LOGOUT -->
+
+<ng-template #modalLogout let-modal>
+    <div class="modal-header">
+        <h3 class="modal-title">Salir de la aplicacción</h3>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Confirma cerrar sesión ?
+    </div>
+    <div class="modal-footer">
+        <button class="card card-small btn bg-light" (click)="closeModal()">
+            <span class="p-2">Cancelar</span>
+        </button>
+        <button class="card card-small btn btn-danger bg-primary" (click)="logout()">
+            <span class="p-2">Cerrar sesion</span>
+        </button>
+    </div>
+</ng-template>
+
+<!-- END MODAL LOGOUT -->
 
 <div class="content" role="main"></div>
 <ngb-toast-container></ngb-toast-container>

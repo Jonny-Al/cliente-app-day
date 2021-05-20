@@ -19,7 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class UsersComponent implements OnInit {
-  constructor(private modalService: NgbModal,private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
+  constructor(private modal: NgbModal,private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
   // ======================  LISTA DE USUARIOS
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -199,18 +199,18 @@ export class UsersComponent implements OnInit {
 
     }
 
-    this.modalService.dismissAll();
+    this.modal.dismissAll();
     this.message = message;
-    this.modalService.open(modal);
+    this.modal.open(modal);
 
   }
 
   openModal(modal: any, type: any) {
-    this.modalService.open(modal, { size: type });
+    this.modal.open(modal, { size: type });
   }
 
   closeModal() {
-    this.modalService.dismissAll();
+    this.modal.dismissAll();
   }
 
   // ========== MENSAJES EN TOAST
