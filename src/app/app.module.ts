@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule } from '@angular/common/http'; // Se agrega los servicios que se van a usar
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; // Se agrega los servicios que se van a usar
 import { NgbToastModule } from 'ngb-toast';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
@@ -33,10 +33,13 @@ import { MatCardModule } from '@angular/material/card';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './Utilidades/app.init';
 
-// ====== SERVICIOS HTTP
-//import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
-//import { RolServiceService } from './Services/Rol/rol-service.service';
-//import { AreaServiceService } from './Services/Area/area-service.service';
+// ===== AUTH TOKEN HTTP INTERCEPTOR
+import { AuthInterceptor } from './Utilidades/AuthInterceptor';
+
+// ====== SERVICES HTTP APIREST-APPDAY
+import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
+import { RolServiceService } from './Services/Rol/rol-service.service';
+import { AreaServiceService } from './Services/Area/area-service.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,14 @@ import { initializeKeycloak } from './Utilidades/app.init';
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  },],
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },
+    UsuarioServiceService,
+    RolServiceService,
+    AreaServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
