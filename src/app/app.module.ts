@@ -23,7 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; // Se agrega los servicios que se van a usar
+import { HttpClientModule } from '@angular/common/http'; // Se agrega los servicios que se van a usar
 import { NgbToastModule } from 'ngb-toast';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatMenuModule } from '@angular/material/menu';
@@ -31,10 +31,10 @@ import { MatCardModule } from '@angular/material/card';
 
 // ===== KEYCLOAK
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
-import { initializeKeycloak } from './Utilidades/app.init';
+import { initializeKeycloak } from './Utilidades/Keycloak/app.init';
 
 // ===== AUTH TOKEN HTTP INTERCEPTOR
-import { AuthInterceptor } from './Utilidades/AuthInterceptor';
+//import { AuthInterceptor } from './Utilidades/AuthInterceptor';
 
 // ====== SERVICES HTTP APIREST-APPDAY
 import { UsuarioServiceService } from './Services/Usuario/usuario-service.service';
@@ -78,11 +78,11 @@ import { AreaServiceService } from './Services/Area/area-service.service';
     useFactory: initializeKeycloak,
     multi: true,
     deps: [KeycloakService],
-  }, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  },
+  },// {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true,
+    // },
     UsuarioServiceService,
     RolServiceService,
     AreaServiceService],

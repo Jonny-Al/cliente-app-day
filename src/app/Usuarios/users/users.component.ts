@@ -53,23 +53,23 @@ export class UsersComponent implements OnInit {
       }
     });
 
-    // // == Obtiene la lista de roles
-    // this.serviceRol.getListRoles().subscribe({
-    //   next: (response: any) => {
-    //     this.roles = response;
-    //   }, error(response: any) {
-    //     console.log('Error al obtener la lista de roles: ', response);
-    //   }
-    // });
+    // == Obtiene la lista de roles
+    this.serviceRol.getListRoles().subscribe({
+      next: (response: any) => {
+        this.roles = response;
+      }, error(response: any) {
+        console.log('Error al obtener la lista de roles: ', response);
+      }
+    });
 
-    // // == Obtiene la lista de areas
-    // this.serviceArea.getListAreas().subscribe({
-    //   next: (response: any) => {
-    //     this.areas = response;
-    //   }, error(response: any) {
-    //     console.log('Error al obtener la lista de areas: ', response);
-    //   }
-    // });
+    // == Obtiene la lista de areas
+    this.serviceArea.getListAreas().subscribe({
+      next: (response: any) => {
+        this.areas = response;
+      }, error(response: any) {
+        console.log('Error al obtener la lista de areas: ', response);
+      }
+    });
 
   }
 

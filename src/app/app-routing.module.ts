@@ -4,7 +4,7 @@ import { ErrorsComponent } from './Pages/Errors/errors.component';
 import { HomeComponent } from './Pages/Home/home.component';
 import { UsereditComponent } from './Usuarios/useredit/useredit.component';
 import { UsersComponent } from './Usuarios/users/users.component';
-import { AuthGuard } from './Utilidades/app.guard';
+import { AuthGuard } from './Utilidades/Keycloak/app.guard';
 //import { AppComponent } from './app.component';
 
 const routes: Routes = [

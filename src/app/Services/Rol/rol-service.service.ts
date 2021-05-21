@@ -1,30 +1,22 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Rol } from 'src/app/Model/Rol';
-import { Util } from 'src/app/Utilidades/Util';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RolServiceService {
 
-  headers = new HttpHeaders();
-  url = `${Util.getUrl()}/rol`;
+  url = 'api/rol';
 
-  constructor(private http: HttpClient) {
-
-    this.headers = new HttpHeaders({
-      'Content-Type': "application/json",
-      'Accept': 'application/json'
-    });
-  }
+  constructor(private http: HttpClient) { }
 
   getListRoles() {
-    return this.http.get<Rol[]>(`${this.url}/list`, { headers: this.headers });
+    return this.http.get<Rol[]>(`${this.url}/list`, { responseType: 'json' });
   }
 
   getFilterRol(rol: string) {
-    return this.http.get<Rol[]>(`${this.url}/filter?rol=${rol}`, { headers: this.headers });
+    return this.http.get<Rol[]>(`${this.url}/filter?rol=${rol}`, { responseType: 'json' });
   }
 
 }

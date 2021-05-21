@@ -11,8 +11,8 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
+        req.clone({ headers: req.headers.set('Accept', 'application/json') });
         req.clone({ headers: req.headers.set('Authorization', 'Bearer MI-AUTH-TOKEN') });
-        req.clone({ headers: req.headers.set('Access-Control-Allow-Headers', 'Content-Type') });
 
         return next.handle(req).pipe(
             map((event: HttpEvent<any>) => {
@@ -22,7 +22,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-
                 console.log('Error de HttpInterceptor: ', error);
                 return throwError(error);
             }));
