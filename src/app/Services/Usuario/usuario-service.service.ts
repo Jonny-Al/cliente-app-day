@@ -10,8 +10,7 @@ const httpOptions = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Methods': 'GET,POST,DELETE,PUT',
   })
 };
 
@@ -26,6 +25,16 @@ export class UsuarioServiceService {
   constructor(private http: HttpClient) { }
 
   getListUsers() {
+    //==== Esta sollicitud es de preba pero funciona - Es de Keycloak para obtener la info del usuario enviando el token del HttpInterceptor
+    this.http.get<any>('http://localhost:8080/auth/realms/tutorial/protocol/openid-connect/userinfo').subscribe({
+      next: (response: any) => {
+        console.log('Response información usuario por token a keycloak: ', response);
+      }, error(response: any) {
+        console.log('Error al obtener info de usuario http a Keycloak: ', response);
+      }
+    });
+
+    // Este da error es un api la cual esta en Spring Boot el error lo dejare debajo
     return this.http.get<Usuario[]>(`${this.url}/list/all`).pipe(catchError(this.handleError));
   }
 

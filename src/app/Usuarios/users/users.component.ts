@@ -19,7 +19,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class UsersComponent implements OnInit {
-  constructor(private modal: NgbModal,private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
+  constructor(private modal: NgbModal, private serviceUsuario: UsuarioServiceService, private serviceRol: RolServiceService, private serviceArea: AreaServiceService, private toastService: NgbToastService) { }
 
   // ======================  LISTA DE USUARIOS
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,7 +45,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     // == Obtiene la lista de usuarios
-    this.serviceUsuario.getListUsers().subscribe({
+     this.serviceUsuario.getListUsers().subscribe({
       next: (response: any) => {
         this.dataSource.data = response as Usuario[];
       }, error(response: any) {
@@ -53,23 +53,23 @@ export class UsersComponent implements OnInit {
       }
     });
 
-    // == Obtiene la lista de roles
-    this.serviceRol.getListRoles().subscribe({
-      next: (response: any) => {
-        this.roles = response;
-      }, error(response: any) {
-        console.log('Error al obtener la lista de roles: ', response);
-      }
-    });
+    // // == Obtiene la lista de roles
+    // this.serviceRol.getListRoles().subscribe({
+    //   next: (response: any) => {
+    //     this.roles = response;
+    //   }, error(response: any) {
+    //     console.log('Error al obtener la lista de roles: ', response);
+    //   }
+    // });
 
-    // == Obtiene la lista de areas
-    this.serviceArea.getListAreas().subscribe({
-      next: (response: any) => {
-        this.areas = response;
-      }, error(response: any) {
-        console.log('Error al obtener la lista de areas: ', response);
-      }
-    });
+    // // == Obtiene la lista de areas
+    // this.serviceArea.getListAreas().subscribe({
+    //   next: (response: any) => {
+    //     this.areas = response;
+    //   }, error(response: any) {
+    //     console.log('Error al obtener la lista de areas: ', response);
+    //   }
+    // });
 
   }
 
