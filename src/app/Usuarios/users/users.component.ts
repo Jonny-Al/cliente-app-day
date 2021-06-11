@@ -80,9 +80,9 @@ export class UsersComponent implements OnInit {
   // Agrega usuario desde el modal #modalAddUser
   addUser(usuario: Usuario, form: NgForm) {
     usuario.estado = 1;
-
+    
     validate(usuario).then(errors => {
-      if (errors.length > 0) {
+    if (errors.length > 0) {
         console.log('Error de campos al agregar usuario: ', errors); // Imprime errores que encuentra en atributos
       } else {
         // Add usuario
