@@ -13,6 +13,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+/*option select in modal*/
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+}
+
 h1,
 h2,
 h3,
